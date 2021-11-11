@@ -1,1 +1,1 @@
-# Обучение фреймворка Django в GeekBrains
+# Обучение фреймворку Django в GeekBrains
