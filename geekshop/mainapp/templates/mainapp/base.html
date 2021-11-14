@@ -8,14 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ title }}</title>
+    <title>{{ title|title }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     {% block css %}
-    <link href="/static/css/index.css" rel="stylesheet">
     {% endblock %}
 </head>
 
@@ -58,6 +57,10 @@
 <!-- Page Content -->
 {% block content %}
 {% endblock %}
+
+{% block footer %}
+{% endblock %}
+
 <!-- Bootstrap core JavaScript -->
 <script src="/static/vendor/jquery/jquery.min.js"></script>
 <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
