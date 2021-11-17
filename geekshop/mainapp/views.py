@@ -17,7 +17,7 @@ def index(request):
 
 
 def products(request):
-    with open('mainapp/fixtures/products.json', 'r', encoding='UTF-8') as json_data:
+    with open('mainapp/fixtures/goods.json', 'r', encoding='UTF-8') as json_data:
         products_data = json.load(json_data)
     context = {
         'title': 'Geekshop - Каталог',
