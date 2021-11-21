@@ -46,4 +46,4 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
-    return render(request, 'mainapp/index.html')
+    return HttpResponseRedirect(reverse('index'))
