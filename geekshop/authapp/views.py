@@ -1,3 +1,4 @@
+from baskets.models import Baskets
 from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -54,8 +55,9 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
     context = {
-      'title': 'Geekshop | Профиль',
+        'title': 'Geekshop | Профиль',
         'form': form,
+        'baskets': Baskets.objects.filter(user=request.user)
     }
     return render(request, 'authapp/profile.html', context)
 

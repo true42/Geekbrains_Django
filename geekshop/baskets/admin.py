@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from baskets.models import baskets
+from baskets.models import Baskets
 
-admin.site.register(baskets)
+admin.site.register(Baskets)

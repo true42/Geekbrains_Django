@@ -4,7 +4,7 @@ from authapp.models import User
 from mainapp.models import Product
 
 
-class baskets(models.Model):
+class Baskets(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
@@ -13,3 +13,14 @@ class baskets(models.Model):
 
     def __str__(self):
         return f'Корзина для {self.user.username} | {self.product.name}'
+
+    def sum(self):
+        return self.quantity * self.product.price
+
+    def total_sum(self):
+        baskets = Baskets.objects.filter(user=self.user)
+        return sum(basket.sum() for basket in baskets)
+
+    def total_quantity(self):
+        baskets = Baskets.objects.filter(user=self.user)
+        return sum(basket.quantity for basket in baskets)
