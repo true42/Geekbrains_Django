@@ -18,3 +18,9 @@ def basket_add(request, id):
         Baskets.objects.create(user=user_select, product=product, quantity=1)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def basket_remove(request, basket_id):
+    Baskets.objects.get(id=basket_id).delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
