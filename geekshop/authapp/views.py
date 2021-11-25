@@ -54,7 +54,7 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
     context = {
-      'tittle': 'Geekshop | Профиль',
+      'title': 'Geekshop | Профиль',
         'form': form,
     }
     return render(request, 'authapp/profile.html', context)
