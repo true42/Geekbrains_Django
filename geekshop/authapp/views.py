@@ -57,10 +57,20 @@ def profile(request):
             return HttpResponseRedirect(reverse('authapp:profile'))
     else:
         form = UserProfileForm(instance=request.user)
+
+    baskets = Baskets.objects.filter(user=request.user)
+    # total_sum = 0
+    # total_quantity = 0
+    # for basket in baskets:
+    #     total_quantity += basket.quantity
+    #     total_sum = basket.sum()
+    #
     context = {
         'title': 'Geekshop | Профиль',
         'form': form,
-        'baskets': Baskets.objects.filter(user=request.user)
+        'baskets': baskets,
+        # 'total_sum': total_sum,
+        # 'total_quantity': total_quantity
     }
     return render(request, 'authapp/profile.html', context)
 
