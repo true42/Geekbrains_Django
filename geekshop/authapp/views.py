@@ -1,9 +1,12 @@
-from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+
+from baskets.models import Baskets
+from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from authapp.forms import UserLoginForm, UserRegisterForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 
 def login(request):
@@ -16,8 +19,6 @@ def login(request):
             if user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))
-        else:
-            print(form.errors)
     else:
         form = UserLoginForm()
     context = {
@@ -32,9 +33,9 @@ def register(request):
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегистрировались.')
+
             return HttpResponseRedirect(reverse('authapp:login'))
-        else:
-            print(form.errors)
     else:
         form = UserRegisterForm()
     context = {
@@ -42,6 +43,26 @@ def register(request):
         'form': form,
     }
     return render(request, 'authapp/register.html', context)
+
+
+@login_required
+def profile(request):
+
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Профиль изменён.')
+
+            return HttpResponseRedirect(reverse('authapp:profile'))
+    else:
+        form = UserProfileForm(instance=request.user)
+    context = {
+        'title': 'Geekshop | Профиль',
+        'form': form,
+        'baskets': Baskets.objects.filter(user=request.user)
+    }
+    return render(request, 'authapp/profile.html', context)
 
 
 def logout(request):
