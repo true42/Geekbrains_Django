@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 from django.views.generic import DetailView
-from .models import Product, Product_Category
+from .models import Product, ProductCategory
 
 
 # Create your views here.
@@ -19,7 +19,7 @@ def index(request):
 
 
 def products(request, id_category=None, page=1):
-    category = Product_Category.objects.all()
+    category = ProductCategory.objects.all()
     if id_category:
         all_products = Product.objects.filter(category_id=id_category)
     else:

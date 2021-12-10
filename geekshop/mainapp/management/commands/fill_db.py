@@ -1,6 +1,6 @@
 import json
 from django.core.management.base import BaseCommand
-from mainapp.models import Product, Product_Category
+from mainapp.models import Product, ProductCategory
 
 
 def load_from_json(file_name):
@@ -12,11 +12,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         categories = load_from_json('mainapp/fixtures/categories.json')
 
-        Product_Category.objects.all().delete()
+        ProductCategory.objects.all().delete()
         for category in categories:
             cat = category.get('fields')
             cat['id'] = category.get('pk')
-            new_category = Product_Category(**cat)
+            new_category = ProductCategory(**cat)
             new_category.save()
 
         products = load_from_json('mainapp/fixtures/products.json')
@@ -25,7 +25,7 @@ class Command(BaseCommand):
         for product in products:
             prod = product.get('fields')
             category = prod.get('category')
-            _category = Product_Category.objects.get(id=category)
+            _category = ProductCategory.objects.get(id=category)
             prod['category'] = _category
             new_category = Product(**prod)
             new_category.save()
