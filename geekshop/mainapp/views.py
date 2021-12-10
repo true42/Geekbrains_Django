@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 from django.views.generic import DetailView
 from .models import Product, Product_Category
@@ -17,13 +18,26 @@ def index(request):
     return render(request, 'mainapp/index.html', context)
 
 
-def products(request):
-    all_products = Product.objects.all()
+def products(request, id_category=None, page=1):
     category = Product_Category.objects.all()
+    if id_category:
+        all_products = Product.objects.filter(category_id=id_category)
+    else:
+        all_products = Product.objects.all()
+
+    paginator = Paginator(all_products, per_page=3)
+
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
+
     context = {
         'title': 'Geekshop - Каталог',
         'menu_items': category,
-        'products': all_products
+        'products': products_paginator
     }
     return render(request, 'mainapp/products.html', context)
 
