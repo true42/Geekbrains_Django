@@ -36,11 +36,7 @@ class UserAdminProfileForm(UserProfileForm):
 
 
 class ProductAdminCreateForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput())
     image = forms.ImageField(widget=forms.FileInput())
-    description = forms.CharField(widget=forms.TextInput())
-    price = forms.DecimalField(widget=forms.NumberInput())
-    quantity = forms.DecimalField(widget=forms.NumberInput())
     category = forms.ModelChoiceField(queryset=ProductCategory.objects.all())
 
 
@@ -61,9 +57,6 @@ class ProductAdminProfileForm(ProductAdminCreateForm):
 
 
 class ProductCategoryAdminCreateForm(forms.ModelForm):
-
-    name = forms.CharField(widget=forms.TextInput())
-    description = forms.CharField(widget=forms.TextInput())
 
     class Meta:
         model = ProductCategory
