@@ -1,4 +1,4 @@
-from mainapp.models import Product, Product_Category
+from mainapp.models import Product, ProductCategory
 from django import forms
 from authapp.forms import UserRegisterForm, UserProfileForm
 from authapp.models import User
@@ -41,7 +41,7 @@ class ProductAdminCreateForm(forms.ModelForm):
     description = forms.CharField(widget=forms.TextInput())
     price = forms.DecimalField(widget=forms.NumberInput())
     quantity = forms.DecimalField(widget=forms.NumberInput())
-    category = forms.ModelChoiceField(queryset=Product_Category.objects.all())
+    category = forms.ModelChoiceField(queryset=ProductCategory.objects.all())
 
 
     class Meta:
@@ -60,21 +60,21 @@ class ProductAdminProfileForm(ProductAdminCreateForm):
     pass
 
 
-class CategoryAdminCreateForm(forms.ModelForm):
+class ProductCategoryAdminCreateForm(forms.ModelForm):
 
     name = forms.CharField(widget=forms.TextInput())
-    description = forms.CharField(widget=forms.TextInput)
+    description = forms.CharField(widget=forms.TextInput())
 
     class Meta:
-        model = Product_Category
+        model = ProductCategory
         fields = ('name', 'description')
 
     def __init__(self, *args, **kwargs):
-        super(CategoryAdminCreateForm, self).__init__(*args, **kwargs)
+        super(ProductCategoryAdminCreateForm, self).__init__(*args, **kwargs)
 
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
 
-class CategoryAdminProfileForm(CategoryAdminCreateForm):
+class ProductCategoryAdminProfileForm(ProductCategoryAdminCreateForm):
     pass
