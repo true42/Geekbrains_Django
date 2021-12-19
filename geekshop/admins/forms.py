@@ -48,7 +48,10 @@ class ProductAdminCreateForm(forms.ModelForm):
         super(ProductAdminCreateForm, self).__init__(*args, **kwargs)
 
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+            if field_name == 'category':
+                field.widget.attrs['class'] = 'form-control'
+            else:
+                field.widget.attrs['class'] = 'form-control py-4'
         self.fields['image'].widget.attrs['class'] = 'custom-file-input'
 
 
