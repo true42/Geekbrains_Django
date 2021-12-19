@@ -86,10 +86,6 @@ class ProfileFormView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
         return get_object_or_404(User, pk=self.request.user.pk)
 
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileFormView, self).get_context_data(**kwargs)
-        context['baskets'] = Baskets.objects.filter(user=self.request.user)
-        return context
 
 
 class Logout(LogoutView):
