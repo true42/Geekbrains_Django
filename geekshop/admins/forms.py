@@ -36,11 +36,7 @@ class UserAdminProfileForm(UserProfileForm):
 
 
 class ProductAdminCreateForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput())
     image = forms.ImageField(widget=forms.FileInput())
-    description = forms.CharField(widget=forms.TextInput())
-    price = forms.DecimalField(widget=forms.NumberInput())
-    quantity = forms.DecimalField(widget=forms.NumberInput())
     category = forms.ModelChoiceField(queryset=ProductCategory.objects.all())
 
 
@@ -52,7 +48,10 @@ class ProductAdminCreateForm(forms.ModelForm):
         super(ProductAdminCreateForm, self).__init__(*args, **kwargs)
 
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+            if field_name == 'category':
+                field.widget.attrs['class'] = 'form-control'
+            else:
+                field.widget.attrs['class'] = 'form-control py-4'
         self.fields['image'].widget.attrs['class'] = 'custom-file-input'
 
 
@@ -61,9 +60,6 @@ class ProductAdminProfileForm(ProductAdminCreateForm):
 
 
 class ProductCategoryAdminCreateForm(forms.ModelForm):
-
-    name = forms.CharField(widget=forms.TextInput())
-    description = forms.CharField(widget=forms.TextInput())
 
     class Meta:
         model = ProductCategory
